@@ -8,7 +8,7 @@ import { user_context } from "../context/user_context";
 const Settings = () => {
   const navigation = useNavigate();
   const { user, setView } = useContext(user_context);
-  if (user.is_admin === false) {
+  if (user?.is_admin === false) {
     return <></>;
   }
   return (
@@ -36,6 +36,11 @@ const Settings = () => {
         <Button
           text={"View Customers"}
           onClick={() => navigation("/view_all_customers")}
+        />
+
+        <Button
+          text={"Create Mobile"}
+          onClick={() => navigation("/create_mobile")}
         />
       </div>
     </div>

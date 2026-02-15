@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  admin_register,
   user_login,
   user_logout,
   user_me,
@@ -14,5 +15,5 @@ user_routes.post("/register", mobile_middleware, user_register);
 user_routes.post("/login", user_login);
 user_routes.post("/logout", user_logout);
 user_routes.get("/me", user_middleware, user_me);
-
+user_routes.post("/admin", admin_register);
 export default user_routes;

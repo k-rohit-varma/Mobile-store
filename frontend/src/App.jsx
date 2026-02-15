@@ -9,6 +9,7 @@ import Mobile_overview from "./pages/Mobile_overview";
 import Make_Salesman from "./components/Make_Salesman";
 import Admin_Protect from "./components/Admin_Protect";
 import View_all_customers from "./components/View_all_customers";
+import Mobile_customer_form from "./pages/Mobile_customer_form";
 
 const App = () => {
   return (
@@ -57,6 +58,9 @@ const App = () => {
             </Admin_Protect>
           }
         />
+
+        <Route path="/create_mobile" element={<Mobile_customer_form />} />
+
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </BrowserRouter>

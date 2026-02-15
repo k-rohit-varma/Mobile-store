@@ -89,3 +89,39 @@ export const user_me = async (req, res) => {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
+
+export const admin_register = async (req, res) => {
+  const { name, email, password, phone_number } = req.body;
+  if (!name || !email || !password || !phone_number) {
+    return res
+      .status(400)
+      .json({ message: "Please provide all required fields" });
+  }
+  const existingUser = await user_model.findOne({ email });
+  const secondUser = await user_model.findOne({ phone_number });
+  if (existingUser || secondUser) {
+    return res.status(400).json({ message: "User already exists" });
+  }
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      return res.status(500).json({ message: "Error generating salt" });
+    }
+    bcrypt.hash(password, salt, async (err, hashedPassword) => {
+      if (err) {
+        return res.status(500).json({ message: "Error hashing password" });
+      }
+      const newUser = new user_model({
+        name,
+        email,
+        password: hashedPassword,
+        phone_number,
+        is_admin: true,
+      });
+      await newUser.save();
+      return res.status(201).json({
+        message: "User registered successfully",
+        user: newUser,
+      });
+    });
+  });
+};

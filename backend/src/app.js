@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://mobile-store-frontend-bdkg.onrender.com", // frontend origin
+    origin:
+      "https://mobile-store-frontend-bdkg.onrender.com" ||
+      process.env.FRONTEND_URL, // frontend origin
     credentials: true,
   }),
 );
