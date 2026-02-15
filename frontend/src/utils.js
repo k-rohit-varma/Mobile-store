@@ -1,1 +1,1 @@
-export const BACKEND_URL = "http://localhost:8800/v1";
+export const BACKEND_URL = "https://mobile-store-backend-4n56.onrender.com";
