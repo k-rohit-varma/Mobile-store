@@ -20,7 +20,12 @@ export const user_login = async (req, res) => {
   }
 
   const token = jwt.sign({ email }, process.env.JWT_SECRET);
-  res.cookie("token", token);
+  res.cookie("token", token,{
+  httpOnly: true,
+  secure: true,          // REQUIRED on HTTPS (Render uses HTTPS)
+  sameSite: "none",      // REQUIRED for cross-origin
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
   return res.status(200).send({ message: "Login successful", user, token });
 };
 
@@ -64,8 +69,13 @@ export const user_logout = (req, res) => {
   if (!token) {
     return res.status(400).json({ message: "No token provided" });
   }
-  res.cookie("token", "");
-  return res.status(200).json({ message: "Logout successful" });
+  res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+});
+  
+  return res.status(200).json({ message: "Logged out successfully" });
 };
 
 export const user_me = async (req, res) => {
